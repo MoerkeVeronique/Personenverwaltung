@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django import forms
-from .models import Mitarbeiter, MedizinischeDaten, Notfallkontakt
+from .models import Mitarbeiter, MedizinischeDaten, Notfallkontakt, Qualifikation, MitarbeiterQualifikation
 # Register your models here.
 
+class QualifikationInline(admin.TabularInline):
+    model = MitarbeiterQualifikation
+    extra = 1
 
 class NotfallkontaktForm(forms.ModelForm):
     class Meta:
@@ -27,7 +30,7 @@ class MitarbeiterAdmin(admin.ModelAdmin):
         model = Mitarbeiter
     list_display = ('vorname', 'nachname', 'email', 'telefonnummer')
     search_fields = ('vorname', 'nachname', 'email')
-    inlines = [NotfallkontaktInline]
+    inlines = [NotfallkontaktInline, QualifikationInline]
 
 class MedizinischeDatenAdmin(admin.ModelAdmin):
     class Meta:
@@ -36,8 +39,13 @@ class MedizinischeDatenAdmin(admin.ModelAdmin):
     list_display = ('mitarbeiter', 'blutgruppe', 'allergien', 'chronische_erkrankungen')
     search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname', 'blutgruppe')
 
+class QualifikationAdmin(admin.ModelAdmin):
+    search_fields = ['name']  
+    list_display = ['name']
 
 
 
+
+admin.site.register(Qualifikation)  
 admin.site.register(Mitarbeiter, MitarbeiterAdmin)
 admin.site.register(MedizinischeDaten, MedizinischeDatenAdmin)
