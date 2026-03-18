@@ -14,3 +14,11 @@ class Mitarbeiter(models.Model):
         return f"{self.vorname} {self.nachname}"
 
 
+class MedizinischeDaten(models.Model):
+    mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='medizinische_daten')
+    blutgruppe = models.CharField(max_length=3)
+    allergien = models.TextField(blank=True)
+    chronische_erkrankungen = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"Medizinische Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}"

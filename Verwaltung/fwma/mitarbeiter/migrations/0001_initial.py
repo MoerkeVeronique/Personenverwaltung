@@ -19,6 +19,17 @@ class Migration(migrations.Migration):
                 ('nachname', models.CharField(max_length=100)),
                 ('email', models.EmailField(max_length=254, unique=True)),
                 ('telefonnummer', models.CharField(blank=True, max_length=20)),
+                
+            ],
+        ),
+        migrations.CreateModel(
+            name='MedizinischeDaten',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('blutgruppe', models.CharField(max_length=3)),
+                ('allergien', models.TextField(blank=True)),
+                ('chronische_erkrankungen', models.TextField(blank=True)),
+                ('mitarbeiter', models.OneToOneField(on_delete=models.CASCADE, related_name='medizinische_daten', to='mitarbeiter.Mitarbeiter')),
             ],
         ),
     ]
