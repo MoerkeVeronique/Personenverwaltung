@@ -26,10 +26,20 @@ class MedizinischeDaten(models.Model):
 
 
 class Notfallkontakt(models.Model):
+    BEZIEHUNGEN = [
+        ('elternteil', 'Elternteil'),
+        ('ehepartner', 'Ehepartner/in'),
+        ('kind', 'Kind'),
+        ('geschwister', 'Geschwister'),
+        ('freund', 'Freund/in'),
+        ('andere', 'Andere'),
+    ]
+    
     mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='notfallkontakt')
     name = models.CharField(max_length=100)
-    beziehung = models.CharField(max_length=50)
+    beziehung = models.CharField(max_length=20, choices=BEZIEHUNGEN, default='andere')
+    beziehung_andere = models.CharField(max_length=100, blank=True, help_text="Nur bei 'Andere' ausfüllen")
     handynummer = models.CharField(max_length=20)
 
     def __str__(self):
-        return f"Notfallkontakt von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}: {self.name} ({self.beziehung})"
+        return f"{self.name} ({self.get_beziehung_display()})"

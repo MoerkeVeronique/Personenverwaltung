@@ -1,12 +1,25 @@
 from django.contrib import admin
+from django import forms
 from .models import Mitarbeiter, MedizinischeDaten, Notfallkontakt
 # Register your models here.
 
 
+class NotfallkontaktForm(forms.ModelForm):
+    class Meta:
+        model = Notfallkontakt
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.beziehung != 'andere':
+            self.fields['beziehung_andere'].widget = forms.HiddenInput()
+
 class NotfallkontaktInline(admin.StackedInline):
     model = Notfallkontakt
-    extra = 1  #zeigt ein leeres Formular beim Anlegen
-    max_num = 1  #nur ein Notfallkontakt pro Mitarbeiter
+    form = NotfallkontaktForm
+    extra = 1
+    max_num = 1
+
 
 class MitarbeiterAdmin(admin.ModelAdmin):
     class Meta:
