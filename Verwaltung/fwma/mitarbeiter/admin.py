@@ -11,6 +11,14 @@ class PrivateDatenInline(admin.StackedInline):
     model = PrivateDaten
     extra = 1
     max_num = 1
+    fieldsets = (
+        ('Adresse', {
+            'fields': (('strasse', 'hausnummer'), ('plz', 'ort'), 'land'),
+        }),
+        ('Persönlich', {
+            'fields': ('personalnummer', 'geburtsdatum', 'familienstand', 'kinder', 'kotonnummer'),
+        }),
+    )
 
 #class NotfallkontaktForm(forms.ModelForm):        #wenn man "andere" auswählt, soll das Textfeld erscheinen, ansonsten soll es ausgeblendet werden, dann muss dman das machen und auch eine js-Datei erstellen, die das noch machen in Ordner static/admin/js/notfallkontakt.js
 #    class Meta:
@@ -44,7 +52,7 @@ class MitarbeiterAdmin(admin.ModelAdmin):
 
 class MedizinischeDatenAdmin(admin.ModelAdmin):
     class Meta:
-        verbose_name_plural = "Medizinische Daten"
+        verbose_name = "Medizinische Daten"
         model = MedizinischeDaten
     list_display = ('mitarbeiter', 'blutgruppe', 'allergien', 'chronische_erkrankungen')
     search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname', 'blutgruppe')
@@ -57,8 +65,10 @@ class PrivateDatenAdmin(admin.ModelAdmin):
     class Meta:
         verbose_name_plural = "Private Daten"
         model = PrivateDaten
-    list_display = ('mitarbeiter', 'adresse', 'geburtsdatum')
-    search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname', 'adresse')
+    
+    list_display = ('mitarbeiter', 'geburtsdatum', 'adresse_vollständig')
+    search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname')
+    readonly_fields = ('adresse_vollständig',)
 
 
 admin.site.register(Qualifikation)  

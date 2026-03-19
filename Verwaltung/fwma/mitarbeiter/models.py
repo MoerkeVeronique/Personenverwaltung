@@ -82,7 +82,11 @@ class PrivateDaten(models.Model):
 
     mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='private_daten')
     personalnummer = models.CharField(max_length=50, unique=True)
-    adresse = models.CharField(max_length=255)
+    strasse = models.CharField(max_length=100, default='--')
+    hausnummer = models.CharField(max_length=10, default='--')
+    plz = models.CharField(max_length=10, default='--')
+    ort = models.CharField(max_length=100, default='--')
+    land = models.CharField(max_length=100, default='Deutschland')
     geburtsdatum = models.DateField()
     familienstand = models.CharField(max_length=20, choices=FAMILIENSTÄNDE, default='--')
     kinder = models.PositiveIntegerField(default=0)
@@ -91,3 +95,6 @@ class PrivateDaten(models.Model):
 
     def __str__(self):
         return f"Private Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}"
+
+    def adresse_vollständig(self):
+        return f"{self.strasse} {self.hausnummer}, {self.plz} {self.ort}, {self.land}"
