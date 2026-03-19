@@ -12,19 +12,19 @@ class PrivateDatenInline(admin.StackedInline):
     extra = 1
     max_num = 1
 
-class NotfallkontaktForm(forms.ModelForm):
-    class Meta:
-        model = Notfallkontakt
-        fields = '__all__'
+#class NotfallkontaktForm(forms.ModelForm):        #wenn man "andere" auswählt, soll das Textfeld erscheinen, ansonsten soll es ausgeblendet werden, dann muss dman das machen und auch eine js-Datei erstellen, die das noch machen in Ordner static/admin/js/notfallkontakt.js
+#    class Meta:
+#        model = Notfallkontakt
+#        fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.instance and self.instance.beziehung != 'andere':
-            self.fields['beziehung_andere'].widget = forms.HiddenInput()
+#    def __init__(self, *args, **kwargs):
+#        super().__init__(*args, **kwargs)
+#        if self.instance and self.instance.beziehung != 'andere':
+#            self.fields['beziehung_andere'].widget = forms.HiddenInput()
 
 class NotfallkontaktInline(admin.StackedInline):
     model = Notfallkontakt
-    form = NotfallkontaktForm
+   # form = NotfallkontaktForm     #siehe Kommentar line15
     extra = 1
     max_num = 1
 
