@@ -85,7 +85,7 @@ class PrivateDaten(models.Model):
     adresse = models.CharField(max_length=255)
     geburtsdatum = models.DateField()
     familienstand = models.CharField(max_length=20, choices=FAMILIENSTÄNDE, default='--')
-    kinder = models.IntegerField(default=0)
+    kinder = models.PositiveIntegerField(default=0)
     kotonnummer = models.CharField(max_length=50, blank=True)
 
 
