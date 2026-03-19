@@ -22,14 +22,26 @@ class Mitarbeiter(models.Model):
 
 
 class MedizinischeDaten(models.Model):
+    BLUTGRUPPEN = [
+        ('--', '--'),
+        ('0+', '0+'),
+        ('0-', '0-'),
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+    ]
+
     mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='medizinische_daten')
-    blutgruppe = models.CharField(max_length=3)
+    blutgruppe = models.CharField(max_length=3, choices=BLUTGRUPPEN, default='--')
     allergien = models.TextField(blank=True)
     chronische_erkrankungen = models.TextField(blank=True)
     medikamende = models.TextField(blank=True)
 
     def __str__(self):
-        return f"Medizinische Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}"
+        return f"Medizinische Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname} ({self.get_blutgruppe_display()})"
 
 
 class Notfallkontakt(models.Model):
@@ -59,3 +71,23 @@ class MitarbeiterQualifikation(models.Model):
     class Meta:
         unique_together = ['mitarbeiter', 'qualifikation']
     
+class PrivateDaten(models.Model):
+    FAMILIENSTÄNDE = [
+        ('--', '--'),
+        ('ledig', 'Ledig'),
+        ('verheiratet', 'Verheiratet'),
+        ('geschieden', 'Geschieden'),
+        ('verwitwet', 'Verwitwet'),
+    ]
+
+    mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='private_daten')
+    personalnummer = models.CharField(max_length=50, unique=True)
+    adresse = models.CharField(max_length=255)
+    geburtsdatum = models.DateField()
+    familienstand = models.CharField(max_length=20, choices=FAMILIENSTÄNDE, default='--')
+    kinder = models.IntegerField(default=0)
+    kotonnummer = models.CharField(max_length=50, blank=True)
+
+
+    def __str__(self):
+        return f"Private Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}"

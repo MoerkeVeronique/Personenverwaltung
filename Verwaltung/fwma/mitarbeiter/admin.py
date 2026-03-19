@@ -1,11 +1,16 @@
 from django.contrib import admin
 from django import forms
-from .models import Mitarbeiter, MedizinischeDaten, Notfallkontakt, Qualifikation, MitarbeiterQualifikation
+from .models import Mitarbeiter, MedizinischeDaten, Notfallkontakt, Qualifikation, MitarbeiterQualifikation, PrivateDaten
 # Register your models here.
 
 class QualifikationInline(admin.TabularInline):
     model = MitarbeiterQualifikation
     extra = 1
+
+class PrivateDatenInline(admin.StackedInline):
+    model = PrivateDaten
+    extra = 1
+    max_num = 1
 
 class NotfallkontaktForm(forms.ModelForm):
     class Meta:
@@ -23,6 +28,11 @@ class NotfallkontaktInline(admin.StackedInline):
     extra = 1
     max_num = 1
 
+class MedizinischeDatenInline(admin.StackedInline):
+    model = MedizinischeDaten
+    extra = 1
+    max_num = 1
+
 
 class MitarbeiterAdmin(admin.ModelAdmin):
     class Meta:
@@ -30,7 +40,7 @@ class MitarbeiterAdmin(admin.ModelAdmin):
         model = Mitarbeiter
     list_display = ('vorname', 'nachname', 'email', 'telefonnummer')
     search_fields = ('vorname', 'nachname', 'email')
-    inlines = [NotfallkontaktInline, QualifikationInline]
+    inlines = [NotfallkontaktInline, PrivateDatenInline, MedizinischeDatenInline, QualifikationInline]
 
 class MedizinischeDatenAdmin(admin.ModelAdmin):
     class Meta:
@@ -43,9 +53,15 @@ class QualifikationAdmin(admin.ModelAdmin):
     search_fields = ['name']  
     list_display = ['name']
 
-
+class PrivateDatenAdmin(admin.ModelAdmin):
+    class Meta:
+        verbose_name_plural = "Private Daten"
+        model = PrivateDaten
+    list_display = ('mitarbeiter', 'adresse', 'geburtsdatum')
+    search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname', 'adresse')
 
 
 admin.site.register(Qualifikation)  
 admin.site.register(Mitarbeiter, MitarbeiterAdmin)
 admin.site.register(MedizinischeDaten, MedizinischeDatenAdmin)
+admin.site.register(PrivateDaten, PrivateDatenAdmin)
