@@ -34,7 +34,7 @@ class NotfallkontaktInline(admin.StackedInline):
     model = Notfallkontakt
    # form = NotfallkontaktForm     #siehe Kommentar line15
     extra = 1
-    max_num = 1
+    max_num = 3
 
 class MedizinischeDatenInline(admin.StackedInline):
     model = MedizinischeDaten
