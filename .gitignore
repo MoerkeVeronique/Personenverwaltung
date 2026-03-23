@@ -212,3 +212,5 @@ __marimo__/
 
 # Database
 *.sqlite3
+
+settings.py
