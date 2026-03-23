@@ -54,7 +54,7 @@ class Notfallkontakt(models.Model):
         ('andere', 'Andere'),
     ]
     
-    mitarbeiter = models.OneToOneField(Mitarbeiter, on_delete=models.CASCADE, related_name='notfallkontakt')
+    mitarbeiter = models.ForeignKey(Mitarbeiter, on_delete=models.CASCADE, related_name='notfallkontakt')
     name = models.CharField(max_length=100)
     beziehung = models.CharField(max_length=20, choices=BEZIEHUNGEN, default='andere')
     beziehung_andere = models.CharField(max_length=100, blank=True, help_text="Nur bei 'Andere' ausfüllen")
@@ -67,6 +67,7 @@ class MitarbeiterQualifikation(models.Model):
     mitarbeiter = models.ForeignKey(Mitarbeiter, on_delete=models.CASCADE)
     qualifikation = models.ForeignKey(Qualifikation, on_delete=models.CASCADE)
     datum_erworben = models.DateField()
+    ablaufdatum = models.DateField(blank=True, null=True)
 
     class Meta:
         unique_together = ['mitarbeiter', 'qualifikation']

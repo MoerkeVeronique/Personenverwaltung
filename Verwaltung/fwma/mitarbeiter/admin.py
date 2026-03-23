@@ -71,7 +71,7 @@ class PrivateDatenAdmin(admin.ModelAdmin):
     readonly_fields = ('adresse_vollständig',)
 
 
-admin.site.register(Qualifikation)  
+admin.site.register(Qualifikation)
 admin.site.register(Mitarbeiter, MitarbeiterAdmin)
 admin.site.register(MedizinischeDaten, MedizinischeDatenAdmin)
 admin.site.register(PrivateDaten, PrivateDatenAdmin)
