@@ -46,11 +46,12 @@ class MedizinischeDaten(models.Model):
     chronische_erkrankungen = models.TextField(blank=True)
     medikamende = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name_plural = "Medizinische Daten"
+
     def __str__(self):
         return f"Medizinische Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname} ({self.get_blutgruppe_display()})"
 
-    class Meta:
-        verbose_name_plural = "Medizinische Daten"
 
 class Notfallkontakt(models.Model):
     BEZIEHUNGEN = [
@@ -68,6 +69,9 @@ class Notfallkontakt(models.Model):
     beziehung_andere = models.CharField(max_length=100, blank=True, help_text="Nur bei 'Andere' ausfüllen")
     handynummer = models.CharField(max_length=20)
 
+    class Meta:
+        verbose_name_plural = "Notfallkontakte"
+
     def __str__(self):
         return f"{self.name} ({self.get_beziehung_display()})"
 
@@ -78,6 +82,7 @@ class MitarbeiterQualifikation(models.Model):
     ablaufdatum = models.DateField(blank=True, null=True)
 
     class Meta:
+        verbose_name_plural = "Mitarbeiter-Qualifikationen"
         unique_together = ['mitarbeiter', 'qualifikation']
     
 class PrivateDaten(models.Model):
