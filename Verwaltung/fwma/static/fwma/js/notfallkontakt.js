@@ -5,8 +5,6 @@ function initNotfallkontaktForm() {
         var $container = $select.closest('.inline-related');
         var $andereDiv = $container.find('.form-row.field-beziehung_andere');
         
-        var 💣 = 23;
-        console.log(💣);
         console.log(' Select in:', $container.attr('id'), $select.val(), 'Andere:', $andereDiv.length);
         
         if ($select.val() === 'andere') {

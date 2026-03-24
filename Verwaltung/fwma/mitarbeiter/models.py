@@ -49,6 +49,8 @@ class MedizinischeDaten(models.Model):
     def __str__(self):
         return f"Medizinische Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname} ({self.get_blutgruppe_display()})"
 
+    class Meta:
+        verbose_name_plural = "Medizinische Daten"
 
 class Notfallkontakt(models.Model):
     BEZIEHUNGEN = [
@@ -99,9 +101,14 @@ class PrivateDaten(models.Model):
     kinder = models.PositiveIntegerField(default=0)
     kotonnummer = models.CharField(max_length=50, blank=True)
 
+    
+
 
     def __str__(self):
         return f"Private Daten von {self.mitarbeiter.vorname} {self.mitarbeiter.nachname}"
 
     def adresse_vollständig(self):
         return f"{self.strasse} {self.hausnummer}, {self.plz} {self.ort}, {self.land}"
+
+    class Meta:
+        verbose_name_plural = "Private Daten"
