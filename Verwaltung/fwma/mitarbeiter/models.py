@@ -6,6 +6,9 @@ class Qualifikation(models.Model):
     name = models.CharField(max_length=100)
     beschreibung = models.TextField(blank=True)
 
+    class Meta:
+        verbose_name_plural = "Qualifikationen"
+
     def __str__(self):
         return self.name
         
@@ -16,6 +19,9 @@ class Mitarbeiter(models.Model):
     email = models.EmailField(unique=True)
     telefonnummer = models.CharField(max_length=20, blank=True)
     qualifikationen = models.ManyToManyField(Qualifikation, through='MitarbeiterQualifikation')
+
+    class Meta:
+        verbose_name_plural = "Mitarbeiter"
 
     def __str__(self):
         return f"{self.vorname} {self.nachname}"

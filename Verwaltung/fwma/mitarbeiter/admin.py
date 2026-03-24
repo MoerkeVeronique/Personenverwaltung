@@ -20,21 +20,25 @@ class PrivateDatenInline(admin.StackedInline):
         }),
     )
 
-#class NotfallkontaktForm(forms.ModelForm):        #wenn man "andere" auswählt, soll das Textfeld erscheinen, ansonsten soll es ausgeblendet werden, dann muss dman das machen und auch eine js-Datei erstellen, die das noch machen in Ordner static/admin/js/notfallkontakt.js
-#    class Meta:
-#        model = Notfallkontakt
-#        fields = '__all__'
+class NotfallkontaktForm(forms.ModelForm):        #wenn man "andere" auswählt, soll das Textfeld erscheinen, ansonsten soll es ausgeblendet werden, dann muss dman das machen und auch eine js-Datei erstellen, die das noch machen in Ordner static/admin/js/notfallkontakt.js
+   class Meta:
+       model = Notfallkontakt
+       fields = '__all__'
 
-#    def __init__(self, *args, **kwargs):
-#        super().__init__(*args, **kwargs)
-#        if self.instance and self.instance.beziehung != 'andere':
-#            self.fields['beziehung_andere'].widget = forms.HiddenInput()
+   def __init__(self, *args, **kwargs):
+       super().__init__(*args, **kwargs)
+       if self.instance and self.instance.beziehung != 'andere':
+           self.fields['beziehung_andere'].widget = forms.HiddenInput()
 
 class NotfallkontaktInline(admin.StackedInline):
     model = Notfallkontakt
-   # form = NotfallkontaktForm     #siehe Kommentar line15
+    form = NotfallkontaktForm     #siehe Kommentar line15
     extra = 1
     max_num = 3
+
+    class Media:
+        js = ('fwma/js/notfallkontakt.js',)
+
 
 class MedizinischeDatenInline(admin.StackedInline):
     model = MedizinischeDaten
@@ -44,7 +48,6 @@ class MedizinischeDatenInline(admin.StackedInline):
 
 class MitarbeiterAdmin(admin.ModelAdmin):
     class Meta:
-        verbose_name_plural = "Mitarbeiter"
         model = Mitarbeiter
     list_display = ('vorname', 'nachname', 'email', 'telefonnummer')
     search_fields = ('vorname', 'nachname', 'email')
@@ -52,7 +55,6 @@ class MitarbeiterAdmin(admin.ModelAdmin):
 
 class MedizinischeDatenAdmin(admin.ModelAdmin):
     class Meta:
-        verbose_name = "Medizinische Daten"
         model = MedizinischeDaten
     list_display = ('mitarbeiter', 'blutgruppe', 'allergien', 'chronische_erkrankungen')
     search_fields = ('mitarbeiter__vorname', 'mitarbeiter__nachname', 'blutgruppe')
@@ -63,7 +65,6 @@ class QualifikationAdmin(admin.ModelAdmin):
 
 class PrivateDatenAdmin(admin.ModelAdmin):
     class Meta:
-        verbose_name_plural = "Private Daten"
         model = PrivateDaten
     
     list_display = ('mitarbeiter', 'geburtsdatum', 'adresse_vollständig')
