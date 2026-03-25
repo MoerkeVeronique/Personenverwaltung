@@ -16,21 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('mitarbeiter.urls')),
 ]
 
 
 # Use include() to add paths from the mitarbeiter application
-from django.urls import include
+
 
 urlpatterns += [
     path('mitarbeiter/', include('mitarbeiter.urls')),
 ]
 
 # Add URL maps to redirect the base URL to our application
-from django.views.generic import RedirectView
+
 urlpatterns += [
     path('', RedirectView.as_view(url='mitarbeiter/', permanent=True)),
 ]
