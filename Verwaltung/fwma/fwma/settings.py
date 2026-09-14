@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'rest_framework_simplejwt',
+    'maengelmelder.apps.MaengelmelderConfig',
 ]
 
 REST_FRAMEWORK = {

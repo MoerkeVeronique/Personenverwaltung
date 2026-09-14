@@ -36,9 +36,15 @@ urlpatterns += [
 
 urlpatterns += [
     path('', RedirectView.as_view(url='mitarbeiter/', permanent=True)),
+    path('', RedirectView.as_view(url='maengelmelder/', permanent=True)),
 ]
 
 # API hinzufügen 
 urlpatterns += [
     path('api/v1/', include('api.urls')),
+]
+
+# Mängelmelder URLs hinzufügen
+urlpatterns += [
+    path('maengelmelder/', include('maengelmelder.urls')),
 ]
