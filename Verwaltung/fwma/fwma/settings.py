@@ -136,7 +136,7 @@ STATIC_URL = 'static/'
 #STATICFILES_DIRS = [BASE_DIR / "fwma" / "static"]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"), # your static/ files folder
+    os.path.join(BASE_DIR, "static"), # static/ files folder
 ]
 
 # Default primary key field type
