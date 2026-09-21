@@ -1,18 +1,9 @@
 from django.db import models
 
 # Create your models here.
-class Kurzbeschreibung(models.Model):
-    beschreibung = models.TextField(max_length=200)
-
-    class Meta:
-        verbose_name_plural = "Kurzbeschreibungen"
-
-    def __str__(self):
-        return self.beschreibung
 
 class Fahrzeuge(models.Model):
     name = models.CharField(max_length=100)
-    beschreibung = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = "Fahrzeuge"
@@ -20,9 +11,9 @@ class Fahrzeuge(models.Model):
     def __str__(self):
         return self.name
 
+
 class Geraete(models.Model):
     name = models.CharField(max_length=100)
-    beschreibung = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = "Geräte"
@@ -30,12 +21,28 @@ class Geraete(models.Model):
     def __str__(self):
         return self.name
 
-class Mangelbeschreibung(models.Model):
-    beschreibung = models.TextField(max_length=500)
+
+class Mangel(models.Model):
+    kurzbeschreibung = models.TextField("Kurzbeschreibung (Freitext)")
+    mangelbeschreibung = models.TextField("Mangelbeschreibung (Freitext)")
+
+    fahrzeug = models.ForeignKey(
+        Fahrzeuge,
+        on_delete=models.PROTECT,
+        verbose_name="Fahrzeug",
+    )
+
+    geraet = models.ForeignKey(
+        Geraete,
+        on_delete=models.PROTECT,
+        verbose_name="Gerät",
+    )
+
+    erstellt_am = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name_plural = "Mangelbeschreibungen"
+        verbose_name = "Mangel"
+        verbose_name_plural = "Mängel"
 
     def __str__(self):
-        return self.beschreibung
-
+        return f"{self.kurzbeschreibung[:30]} ({self.erstellt_am})"

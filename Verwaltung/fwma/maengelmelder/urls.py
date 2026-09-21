@@ -1,15 +1,6 @@
 from django.urls import path
-from . import views
+from django.contrib import admin
 
 urlpatterns = [
-
+   
 ]
-
-
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
-
-
-urlpatterns = router.urls  
