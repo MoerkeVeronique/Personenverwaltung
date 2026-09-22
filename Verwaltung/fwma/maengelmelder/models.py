@@ -4,6 +4,7 @@ from django.db import models
 
 class Fahrzeuge(models.Model):
     name = models.CharField(max_length=100)
+    beschreibung = models.TextField("Beschreibung (Freitext)", blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Fahrzeuge"
@@ -14,6 +15,7 @@ class Fahrzeuge(models.Model):
 
 class Geraete(models.Model):
     name = models.CharField(max_length=100)
+    beschreibung = models.TextField("Beschreibung (Freitext)", blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Geräte"
